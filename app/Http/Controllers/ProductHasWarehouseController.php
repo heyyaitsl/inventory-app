@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductHasWarehouse;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Warehouse;
 
 /**
  * Class ProductHasWarehouseController
@@ -32,7 +34,9 @@ class ProductHasWarehouseController extends Controller
     public function create()
     {
         $productHasWarehouse = new ProductHasWarehouse();
-        return view('product-has-warehouse.create', compact('productHasWarehouse'));
+        $products = Product::pluck('name', 'id');
+        $warehouses = Warehouse::pluck('name', 'id');
+        return view('product-has-warehouse.create', compact('productHasWarehouse', 'products', 'warehouses'));
     }
 
     /**
@@ -57,9 +61,11 @@ class ProductHasWarehouseController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($productId, $warehouseId)
     {
-        $productHasWarehouse = ProductHasWarehouse::find($id);
+        $productHasWarehouse = ProductHasWarehouse::where('product_id', $productId)
+        ->where('warehouse_id', $warehouseId)
+        ->first();
 
         return view('product-has-warehouse.show', compact('productHasWarehouse'));
     }
@@ -70,11 +76,16 @@ class ProductHasWarehouseController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($productId, $warehouseId)
     {
-        $productHasWarehouse = ProductHasWarehouse::find($id);
+        $productHasWarehouse = ProductHasWarehouse::where('product_id', $productId)
+        ->where('warehouse_id', $warehouseId)
+        ->first();
 
-        return view('product-has-warehouse.edit', compact('productHasWarehouse'));
+        $products = Product::pluck('name', 'id');
+        $warehouses = Warehouse::pluck('name', 'id');
+
+        return view('product-has-warehouse.edit', compact('productHasWarehouse', 'warehouses', 'products'));
     }
 
     /**
@@ -84,14 +95,18 @@ class ProductHasWarehouseController extends Controller
      * @param  ProductHasWarehouse $productHasWarehouse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductHasWarehouse $productHasWarehouse)
+    public function update(Request $request, $productId, $warehouseId)
     {
         request()->validate(ProductHasWarehouse::$rules);
 
-        $productHasWarehouse->update($request->all());
+        ProductHasWarehouse::where('product_id', $productId)
+            ->where('warehouse_id', $warehouseId)
+            ->update($request->all());
 
         return redirect()->route('product-has-warehouses.index')
-            ->with('success', 'ProductHasWarehouse updated successfully');
+                ->with('success', 'ProductHasWarehouse updated successfully');
+    
+
     }
 
     /**
@@ -99,11 +114,18 @@ class ProductHasWarehouseController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($productId, $warehouseId)
     {
-        $productHasWarehouse = ProductHasWarehouse::find($id)->delete();
+        $deletedRows = ProductHasWarehouse::where('product_id', $productId)
+            ->where('warehouse_id', $warehouseId)
+            ->delete();
 
-        return redirect()->route('product-has-warehouses.index')
-            ->with('success', 'ProductHasWarehouse deleted successfully');
+        if ($deletedRows > 0) {
+            return redirect()->route('product-has-warehouses.index')
+                ->with('success', 'ProductHasWarehouse deleted successfully');
+        } else {
+            return redirect()->route('product-has-warehouses.index')
+                ->with('error', 'ProductHasWarehouse not found');
+        }
     }
 }

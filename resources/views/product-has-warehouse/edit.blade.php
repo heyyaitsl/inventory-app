@@ -16,7 +16,7 @@
                         <span class="card-title">{{ __('Update') }} Product Has Warehouse</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('product-has-warehouses.update', $productHasWarehouse->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('product-has-warehouses.update', [$productHasWarehouse->product_id, $productHasWarehouse->warehouse_id]) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

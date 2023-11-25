@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\ProductHasWarehouse;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +35,9 @@ class ProductController extends Controller
     public function create()
     {
         $product = new Product();
-        return view('product.create', compact('product'));
+        $categories =Category::pluck('name','id');
+        $warehouses = Warehouse::pluck('name','id');
+        return view('product.create', compact('product', 'categories', 'warehouses'));
     }
 
     /**
@@ -46,6 +51,8 @@ class ProductController extends Controller
         request()->validate(Product::$rules);
 
         $product = Product::create($request->all());
+        $product->warehouses()->attach($request->input('warehouse_ids'));
+
 
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
@@ -73,8 +80,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-
-        return view('product.edit', compact('product'));
+        $categories=Category::pluck('name','id');
+        $warehouses = Warehouse::pluck('name','id');
+        return view('product.edit', compact('product', 'categories', 'warehouses'));
     }
 
     /**
@@ -89,7 +97,8 @@ class ProductController extends Controller
         request()->validate(Product::$rules);
 
         $product->update($request->all());
-
+        $product->warehouses()->sync($request->input('warehouse_ids'));
+        
         return redirect()->route('products.index')
             ->with('success', 'Product updated successfully');
     }

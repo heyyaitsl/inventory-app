@@ -56,5 +56,14 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductHasWarehouse', 'product_id', 'id');
     }
     
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    
+    public function warehouses()
+    {
+        return $this->belongsToMany(Warehouse::class, 'product_has_warehouses', 'product_id', 'warehouse_id');
+    }
+    
 
 }

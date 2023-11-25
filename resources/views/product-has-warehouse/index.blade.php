@@ -47,13 +47,13 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $productHasWarehouse->product_id }}</td>
-											<td>{{ $productHasWarehouse->warehouse_id }}</td>
+											<td>{{ $productHasWarehouse->product->name }}</td>
+											<td>{{ $productHasWarehouse->warehouse->name }}</td>
 
                                             <td>
-                                                <form action="{{ route('product-has-warehouses.destroy',$productHasWarehouse->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('product-has-warehouses.show',$productHasWarehouse->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('product-has-warehouses.edit',$productHasWarehouse->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('product-has-warehouses.destroy', [$productHasWarehouse->product_id, $productHasWarehouse->warehouse_id]) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('product-has-warehouses.show',[$productHasWarehouse->product_id, $productHasWarehouse->warehouse_id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('product-has-warehouses.edit',[$productHasWarehouse->product_id, $productHasWarehouse->warehouse_id]) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
