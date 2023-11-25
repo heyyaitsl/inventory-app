@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 /**
  * Class WarehouseController
@@ -32,7 +33,8 @@ class WarehouseController extends Controller
     public function create()
     {
         $warehouse = new Warehouse();
-        return view('warehouse.create', compact('warehouse'));
+        $products = Product::pluck('name','id');
+        return view('warehouse.create', compact('warehouse', 'products'));
     }
 
     /**
@@ -46,6 +48,7 @@ class WarehouseController extends Controller
         request()->validate(Warehouse::$rules);
 
         $warehouse = Warehouse::create($request->all());
+        $warehouse->products()->attach($request->input('product_ids'));
 
         return redirect()->route('warehouses.index')
             ->with('success', 'Warehouse created successfully.');
@@ -73,8 +76,9 @@ class WarehouseController extends Controller
     public function edit($id)
     {
         $warehouse = Warehouse::find($id);
+        $products = Product::pluck('name','id');
 
-        return view('warehouse.edit', compact('warehouse'));
+        return view('warehouse.edit', compact('warehouse', 'products'));
     }
 
     /**
@@ -89,6 +93,7 @@ class WarehouseController extends Controller
         request()->validate(Warehouse::$rules);
 
         $warehouse->update($request->all());
+        $warehouse->products()->sync($request->input('product_ids'));
 
         return redirect()->route('warehouses.index')
             ->with('success', 'Warehouse updated successfully');

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Warehouse
+    Almacenes
 @endsection
 
 @section('content')
@@ -13,12 +13,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Warehouse') }}
+                                Almacenes
                             </span>
 
                              <div class="float-right">
                                 <a href="{{ route('warehouses.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                  Crear nuevo
                                 </a>
                               </div>
                         </div>
@@ -34,9 +34,12 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
+                                        <th>Id</th>
                                         
-										<th>Name</th>
+										<th>Nombre</th>
+                                        <th>Productos</th>
+                                
+
 
                                         <th></th>
                                     </tr>
@@ -44,17 +47,25 @@
                                 <tbody>
                                     @foreach ($warehouses as $warehouse)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{$warehouse->id}}</td>
                                             
 											<td>{{ $warehouse->name }}</td>
 
                                             <td>
+                                                <ul>
+                                                    @foreach ($warehouse->products as $product)
+                                                        <li>{{ $product->name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+
+                                            <td>
                                                 <form action="{{ route('warehouses.destroy',$warehouse->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('warehouses.show',$warehouse->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('warehouses.edit',$warehouse->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('warehouses.show',$warehouse->id) }}"><i class="fa fa-fw fa-eye"></i>Ver</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('warehouses.edit',$warehouse->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i>Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>

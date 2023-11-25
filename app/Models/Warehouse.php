@@ -32,14 +32,14 @@ class Warehouse extends Model
      */
     protected $fillable = ['name'];
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function productHasWarehouses()
-    {
-        return $this->hasMany('App\Models\ProductHasWarehouse', 'warehouse_id', 'id');
-    }
+    
+     public function products()
+     {
+         return $this->belongsToMany(Product::class, 'product_has_warehouses', 'warehouse_id', 'product_id');
+     }
     
 
 }

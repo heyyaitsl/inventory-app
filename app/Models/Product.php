@@ -48,13 +48,7 @@ class Product extends Model
         return $this->hasOne('App\Models\Category', 'id', 'category_id');
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function productHasWarehouses()
-    {
-        return $this->hasMany('App\Models\ProductHasWarehouse', 'product_id', 'id');
-    }
+
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

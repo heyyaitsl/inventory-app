@@ -67,8 +67,10 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        $categories =Category::pluck('name','id');
+        $warehouses = Warehouse::pluck('name','id');
 
-        return view('product.show', compact('product'));
+        return view('product.show', compact('product', 'categories', 'warehouses'));
     }
 
     /**
