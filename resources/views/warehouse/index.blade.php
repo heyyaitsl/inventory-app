@@ -18,7 +18,7 @@
 
                              <div class="float-right">
                                 <a href="{{ route('warehouses.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  Crear nuevo
+                                  Crear nuevo almacén
                                 </a>
                               </div>
                         </div>
