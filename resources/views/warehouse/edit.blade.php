@@ -16,7 +16,7 @@
                         <span class="card-title">Editar almacén</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('warehouses.update', $warehouse->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" class="warehouse-form" action="{{ route('warehouses.update', $warehouse->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

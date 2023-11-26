@@ -3,8 +3,8 @@
         
         <div class="form-group">
             {{ Form::label('Nombre') }}
-            {{ Form::text('name', $category->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name']) }}
-            {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::text('name', $category->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+            <div class="name-error invalid-feedback">{{ $errors->first('name') }}</div>
         </div>
 
     </div>

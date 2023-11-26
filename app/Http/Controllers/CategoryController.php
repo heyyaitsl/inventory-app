@@ -47,8 +47,9 @@ class CategoryController extends Controller
 
         $category = Category::create($request->all());
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Categoría creada correctamente.');
+        //return redirect()->route('categories.index')
+      //     ->with('success', 'Categoría creada correctamente.');
+        return response()->json(['success' => true, 'message' => 'Categoría creada correctamente.',"redirect" => route('categories.index')]);
     }
 
     /**
@@ -90,8 +91,9 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Categoría editada correctamente.');
+        
+        return response()->json(['success' => true, 'message' => 'Categoría editada correctamente.',"redirect" => route('categories.index')]);
+
     }
 
     /**

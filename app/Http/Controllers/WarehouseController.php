@@ -50,8 +50,8 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::create($request->all());
         $warehouse->products()->attach($request->input('product_ids'));
 
-        return redirect()->route('warehouses.index')
-            ->with('success', 'Almacén creado correctamente.');
+        return response()->json(['success' => true, 'message' => 'Almacén creado correctamente.',"redirect" => route('warehouses.index')]);
+
     }
 
     /**
@@ -95,8 +95,8 @@ class WarehouseController extends Controller
         $warehouse->update($request->all());
         $warehouse->products()->sync($request->input('product_ids'));
 
-        return redirect()->route('warehouses.index')
-            ->with('success', 'Almacén editado correctamente.');
+        return response()->json(['success' => true, 'message' => 'Almacén editado correctamente.',"redirect" => route('warehouses.index')]);
+
     }
 
     /**

@@ -16,7 +16,7 @@
                         <span class="card-title">Crear almacén</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('warehouses.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" class="warehouse-form" action="{{ route('warehouses.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('warehouse.form')

@@ -14,8 +14,6 @@ $(document).ready(function() {
         
         if(validateCategoryForm($(this))) {
             sendFormWithAjax($(this));
-        }else {
-            alert('Formuario no válido. Corrija los errores en el formulario.');
         }
     });
 
@@ -24,8 +22,6 @@ $(document).ready(function() {
         
         if(validateWarehouseForm($(this))) {
             sendFormWithAjax($(this));
-        }else {
-            alert('Formuario no válido. Corrija los errores en el formulario.');
         }
     });
 
@@ -36,15 +32,18 @@ $(document).ready(function() {
             data: form.serialize(),
             dataType: 'json',
             success: function(response) {
+                console.log(response);
                 if(response.success) {
-                    alert(response.message);
-                    window.location.href = response.redirect;
+                    var encodedMessage = encodeURIComponent(response.message);
+                    window.location.href = response.redirect + "?message=" + encodedMessage;
+
                 }else {
                     alert(response.message);
                 }
             },
             error: function(response) {
-                alert('Error al enviar el formulario.');
+                console.log(response);
+                alert(response.message);
             }
         });
     }
@@ -54,16 +53,29 @@ $(document).ready(function() {
 
         if(name == '') {
             form.find('input[name="name"]').addClass('is-invalid');
+            showMessage(".name-error",'El nombre de la categoría es requerido.');
             return false;
         }
-
-        if(name.length < 10) {
-            form.find('input[name="name"]').addClass('is-invalid');
-            return false;
-        }
-        
+       
         form.find('input[name="name"]').removeClass('is-invalid');
         return true;
+    }
+
+    function validateWarehouseForm(form) {
+        var name = form.find('input[name="name"]').val();
+
+        if(name == '') {
+            form.find('input[name="name"]').addClass('is-invalid');
+            showMessage(".name-error",'El nombre del almacén es requerido.');
+            return false;
+        }
+       
+        form.find('input[name="name"]').removeClass('is-invalid');
+        return true;
+    }
+
+    function showMessage(className, message) {
+        $(className).text(message);
     }
 });
 
