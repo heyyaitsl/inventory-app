@@ -55,8 +55,8 @@ class ProductController extends Controller
         $product->warehouses()->attach($request->input('warehouse_ids'));
 
 
-        return redirect()->route('products.index')
-            ->with('success', 'Producto creado correctamente.');
+        return response()->json(['success' => true, 'message' => 'Producto creado correctamente.',"redirect" => route('products.index')]);
+
     }
 
     /**
@@ -102,8 +102,8 @@ class ProductController extends Controller
         $product->update($request->all());
         $product->warehouses()->sync($request->input('warehouse_ids'));
         
-        return redirect()->route('products.index')
-            ->with('success', 'Producto editado correctamente.');
+        return response()->json(['success' => true, 'message' => 'Producto editado correctamente.',"redirect" => route('products.index')]);
+
     }
 
     /**

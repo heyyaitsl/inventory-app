@@ -23,7 +23,7 @@
                               </div>
                         </div>
                     </div>
-                    @if ($message = Session::get('success'))
+                    @if ($message = request('message'))
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
                         </div>
