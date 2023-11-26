@@ -8,18 +8,9 @@ use App\Models\ProductHasWarehouse;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
-/**
- * Class ProductController
- * @package App\Http\Controllers
- */
 class ProductController extends Controller
 {
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $products = Product::paginate();
@@ -28,11 +19,6 @@ class ProductController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $products->perPage());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $product = new Product();
@@ -41,12 +27,6 @@ class ProductController extends Controller
         return view('product.create', compact('product', 'categories', 'warehouses'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         request()->validate(Product::$rules);
@@ -59,12 +39,6 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $product = Product::find($id);
@@ -74,12 +48,6 @@ class ProductController extends Controller
         return view('product.show', compact('product', 'categories', 'warehouses'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $product = Product::find($id);
@@ -88,13 +56,6 @@ class ProductController extends Controller
         return view('product.edit', compact('product', 'categories', 'warehouses'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Product $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Product $product)
     {
         request()->validate(Product::$rules);
@@ -106,14 +67,9 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
-        $product = Product::find($id)->delete();
+        Product::find($id)->delete();
 
         return redirect()->route('products.index')
             ->with('success', 'Producto eliminado correctamente.');

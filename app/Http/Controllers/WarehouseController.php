@@ -6,17 +6,9 @@ use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
-/**
- * Class WarehouseController
- * @package App\Http\Controllers
- */
 class WarehouseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         $warehouses = Warehouse::paginate();
@@ -25,11 +17,6 @@ class WarehouseController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $warehouses->perPage());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $warehouse = new Warehouse();
@@ -37,12 +24,6 @@ class WarehouseController extends Controller
         return view('warehouse.create', compact('warehouse', 'products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         request()->validate(Warehouse::$rules);
@@ -54,12 +35,6 @@ class WarehouseController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $warehouse = Warehouse::find($id);
@@ -67,12 +42,6 @@ class WarehouseController extends Controller
         return view('warehouse.show', compact('warehouse'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $warehouse = Warehouse::find($id);
@@ -81,13 +50,6 @@ class WarehouseController extends Controller
         return view('warehouse.edit', compact('warehouse', 'products'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Warehouse $warehouse
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Warehouse $warehouse)
     {
         request()->validate(Warehouse::$rules);
@@ -99,14 +61,9 @@ class WarehouseController extends Controller
 
     }
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
-        $warehouse = Warehouse::find($id)->delete();
+        Warehouse::find($id)->delete();
 
         return redirect()->route('warehouses.index')
             ->with('success', 'Almacén eliminado correctamente.');	
