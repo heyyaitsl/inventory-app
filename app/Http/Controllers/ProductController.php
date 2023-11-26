@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
  */
 class ProductController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +56,7 @@ class ProductController extends Controller
 
 
         return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+            ->with('success', 'Producto creado correctamente.');
     }
 
     /**
@@ -102,7 +103,7 @@ class ProductController extends Controller
         $product->warehouses()->sync($request->input('warehouse_ids'));
         
         return redirect()->route('products.index')
-            ->with('success', 'Product updated successfully');
+            ->with('success', 'Producto editado correctamente.');
     }
 
     /**
@@ -115,6 +116,6 @@ class ProductController extends Controller
         $product = Product::find($id)->delete();
 
         return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully');
+            ->with('success', 'Producto eliminado correctamente.');
     }
 }

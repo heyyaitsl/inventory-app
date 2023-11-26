@@ -16,7 +16,7 @@
                         <span class="card-title">Crear categoría</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('categories.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" class="category-form" action="{{ route('categories.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('category.form')

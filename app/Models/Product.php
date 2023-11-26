@@ -24,10 +24,11 @@ class Product extends Model
 {
     
     static $rules = [
-		'name' => 'required',
-		'price' => 'required',
+		'name' => 'required|string|min:3',
+		'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
 		'observations' => 'required',
-		'category_id' => 'required',
+		'category_id' => 'required|numeric',
+        'warehouses_id' => 'array',
     ];
 
     protected $perPage = 20;

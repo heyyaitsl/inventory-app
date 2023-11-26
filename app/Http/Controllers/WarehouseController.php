@@ -51,7 +51,7 @@ class WarehouseController extends Controller
         $warehouse->products()->attach($request->input('product_ids'));
 
         return redirect()->route('warehouses.index')
-            ->with('success', 'Warehouse created successfully.');
+            ->with('success', 'Almacén creado correctamente.');
     }
 
     /**
@@ -96,7 +96,7 @@ class WarehouseController extends Controller
         $warehouse->products()->sync($request->input('product_ids'));
 
         return redirect()->route('warehouses.index')
-            ->with('success', 'Warehouse updated successfully');
+            ->with('success', 'Almacén editado correctamente.');
     }
 
     /**
@@ -109,6 +109,6 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::find($id)->delete();
 
         return redirect()->route('warehouses.index')
-            ->with('success', 'Warehouse deleted successfully');
+            ->with('success', 'Almacén eliminado correctamente.');	
     }
 }
