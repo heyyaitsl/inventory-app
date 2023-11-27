@@ -1,9 +1,7 @@
 <?php
 
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use function Pest\Laravel\call;
 
 test('it creates a category', function () {
     $data = [ 'name' => 'Ropa' ];

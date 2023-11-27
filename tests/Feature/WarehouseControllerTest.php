@@ -1,9 +1,6 @@
 <?php
 
 use App\Models\Warehouse;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-use function Pest\Laravel\call;
 
 test('it creates a warehouse', function () {
     $data = [ 'name' => 'Ropa' ];
