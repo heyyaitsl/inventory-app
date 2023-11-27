@@ -7,8 +7,12 @@ use function Pest\Laravel\call;
 
 test('it creates a category', function () {
     $data = [ 'name' => 'Ropa' ];
-    $this->post(route('categories.store'), $data);
-    $this->assertDatabaseHas('categories', $data);
+    try{
+        $this->post(route('categories.store'), $data);
+        $this->assertDatabaseHas('categories', $data);
+    }finally{
+        Category::where('name', 'Ropa')->delete();
+    }
 });
 
 test('it fails to create a category without name', function () {
@@ -20,13 +24,22 @@ test('it fails to create a category without name', function () {
 test('it reads a category', function () {
     $data = [ 'name' => 'Ropa' ];
     $category = Category::create($data);
-    $this->get(route('categories.show', $category->id))->assertSee($data['name']);
+    try {
+        $this->get(route('categories.show', $category->id))->assertSee($data['name']);
+    } finally {
+        $category->delete();
+    }
+
 });
 
 test('it lists categories', function () {
     $data = [ 'name' => 'Joyas' ];
-    Category::create($data);
-    $this->get(route('categories.index'))->assertSee($data['name']);
+    $category = Category::create($data);
+    try {
+        $this->get(route('categories.index'))->assertSee($data['name']);
+    } finally {
+        $category->delete();
+    }
 });
 
 test('it updates a category', function () {
@@ -34,9 +47,12 @@ test('it updates a category', function () {
     $category = Category::create($data);
 
     $dataUpdate = [ 'name' => 'Calzado' ];
-    $this->patch(route('categories.update', $category->id), $dataUpdate);
-    $this->assertDatabaseHas('categories', $dataUpdate);
-
+    try {
+        $this->patch(route('categories.update', $category->id), $dataUpdate);
+        $this->assertDatabaseHas('categories', $dataUpdate);
+    } finally {
+        $category->delete();
+    }
 });
 
 test('it deletes a category', function () {
