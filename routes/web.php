@@ -18,10 +18,16 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::resource('categories', App\Http\Controllers\CategoryController::class);
-Route::resource('products', App\Http\Controllers\ProductController::class);
-Route::resource('warehouses', App\Http\Controllers\WarehouseController::class);
 
-Auth::routes();
+
+Auth::routes(['reset'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('home');
+    Route::resource('categories', App\Http\Controllers\CategoryController::class);
+    Route::resource('products', App\Http\Controllers\ProductController::class);
+    Route::resource('warehouses', App\Http\Controllers\WarehouseController::class);
+
+});
