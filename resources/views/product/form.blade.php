@@ -9,7 +9,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Precio (en euros)') }}
-            {{ Form::number('price', $product->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Precio', 'step'=>'any']) }}
+            {{ Form::number('price', $product->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Precio', 'step'=>'0.01']) }}
             <div class="price-error invalid-feedback">{{ $errors->first('name') }}</div>
         </div>
         <div class="form-group">

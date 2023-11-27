@@ -105,6 +105,13 @@ $(document).ready(function() {
         }else{
             cleanMessage('input[name="price"]',".price-error");
         }
+        if(price < 0) {
+            form.find('input[name="price"]').addClass('is-invalid');
+            showMessage(".price-error",'El precio del producto debe ser positivo.');
+            error++;
+        }else if(price!=''){
+            cleanMessage('input[name="price"]',".price-error");
+        }
         if(observations == '') {
             form.find('input[name="observations"]').addClass('is-invalid');
             showMessage(".observations-error",'Las observaciones del producto son requeridas.');
